@@ -1,0 +1,154 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Faster Code Generator</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<header id="header">
+				<a class="logo" href="#">Faster Code Generator</a>
+				<!-- <nav>
+					<a href="#menu">Menu</a>
+				</nav> -->
+			</header>
+
+		<!-- Nav -->
+			<!-- <nav id="menu">
+				<ul class="links">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="elements.html">Elements</a></li>
+					<li><a href="generic.html">Generic</a></li>
+				</ul>
+			</nav> -->
+
+		<!-- Heading -->
+			<div id="heading" >
+				<h1>Faster Code Generator</h1>
+			</div>
+        
+        <!-- Main -->
+			<section id="main" class="wrapper">
+				<div class="inner">
+					<div class="content">
+                    
+                    <h3>Generator</h3>
+									<form method="post" action="#" id="gencode">
+										<div class="row gtr-uniform">
+											<div class="col-6 col-12-xsmall">
+                                                <strong>Variable Names (Separate by ' , ')</strong>
+												<input type="text" name="variable" id="variable" value="" placeholder="Variable Names"/>
+											</div>
+                                            
+											<div class="col-6 col-12-xsmall">
+											</div>
+                                            
+                                            <div class="col-12 col-12-xsmall">
+                                                <strong>Output Format (Use ' %s ' to indicate variable name)</strong>
+												<input type="text" name="format" id="format" value="" placeholder="Output Format" />
+											</div>
+
+
+											<!-- Break -->
+											<div class="col-12">
+												<ul class="actions">
+													<li><a href="#main" class="button primary" onclick="generate()">Generate</a></li>
+													<li><input type="reset" value="Reset" /></li>
+												</ul>
+											</div>
+                                            
+                                            <div class="col-12" >
+                                                <strong>Result</strong>
+												<textarea id="outputTextArea" name="output" id="output" placeholder="Result" rows="6" onclick="copyAll(this.id)" readonly></textarea> 
+											</div>
+                                            
+										</div> 
+									</form>
+					
+					</div>
+				</div>
+			</section>        
+        
+        <!-- Footer -->
+			<footer id="footer">
+				<div class="inner">
+					<div class="content">
+                        
+						<section>
+							<h3>Explore More</h3>
+							<ul class="plain">
+								<!-- <li><a href="#"><i class="icon fa-twitter">&nbsp;</i>Twitter</a></li>
+								<li><a href="#"><i class="icon fa-facebook">&nbsp;</i>Facebook</a></li>
+								<li><a href="#"><i class="icon fa-instagram">&nbsp;</i>Instagram</a></li> -->
+								<li><a href="https://github.com/shingz96/FasterCodeGenerator"><i class="icon fa-github">&nbsp;</i>Github</a></li>
+							</ul>
+						</section>
+
+                        
+					</div>
+					<div class="copyright">
+						2018 &copy;  <a href="https://github.com/shingz96/FasterCodeGenerator">Faster Code Editor</a>. By Chee Kah Shing.
+					</div>
+				</div>
+			</footer>
+
+        
+        <!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+            
+            <script>
+                //"use strict";
+                function copyAll(id) {
+
+                  /* Get the text field */
+                  var copyText = document.getElementById(id);
+
+                  /* Select the text field */
+                  copyText.select();
+
+                  /* Copy the text inside the text field */
+                  document.execCommand("Copy");
+
+                  /* Alert the copied text */
+                  alert("Copied the text: " + copyText.value);
+                }
+                
+                function generate() {
+                    let arr = gencode.variable.value.split(',');
+                    let f = gencode.format.value;
+
+                    if(!gencode.variable.value){ 
+                        alert("Missing Variable Names!");
+                        setTimeout(function(){ document.getElementById("variable").focus();}, 0);
+                        return;
+                    }else if (!f){
+                        alert("Missing Output Format!");
+                        setTimeout(function(){ document.getElementById("format").focus();}, 0);
+                        return;
+                    }
+                    
+                    let output = "";
+                    for (let i = 0; i < arr.length; i++){
+                        
+                        let result = f.replace(/%s/gi, arr[i])
+                                      .replace(/"/g,"\"");
+                        output += result + "\n";              
+                    }
+                    gencode.output.value = output;
+                }
+                
+                
+                
+            </script>
+
+	</body>
+</html>
